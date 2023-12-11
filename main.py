@@ -76,9 +76,10 @@ if __name__ == '__main__':
             bot.send_message(message.from_user.id, 'Отправь мне новость')
 
         elif message.text == 'Выбрать лучшие акции для торговли':
-            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)} \n метрики этих акций'
-                                                   f'{str(metrics)}' ,
+            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)}',
                              reply_markup=markup)
+        #     \n метрики этих акций'
+        #                                                    f'{str(metrics)}
 
         elif str(message.text).strip().lower() in ticket_lists:
             ticket = str(message.text).strip().upper()
