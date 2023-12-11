@@ -35,7 +35,7 @@ if __name__ == '__main__':
         print(f"Ранжируем {len(tikets)} акций")
         ranking_listing, metrics = ranking(tikets)  # не грузит почему то :(
 
-        return ' '.join(ranking_listing[:5]), str(metrics[:5])
+        return ' '.join(ranking_listing[:5]), metrics
     import requests
 
     ranked_tiket, metrics = get_tiket()
@@ -76,10 +76,8 @@ if __name__ == '__main__':
             bot.send_message(message.from_user.id, 'Отправь мне новость')
 
         elif message.text == 'Выбрать лучшие акции для торговли':
-            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)}',
+            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)} \n метрики этих акций : {metrics}',
                              reply_markup=markup)
-        #     \n метрики этих акций'
-        #                                                    f'{str(metrics)}
 
         elif str(message.text).strip().lower() in ticket_lists:
             ticket = str(message.text).strip().upper()

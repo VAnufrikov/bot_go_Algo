@@ -518,7 +518,7 @@ def get_ticket_price(ticket: str, df, horizont) -> tuple:
     # date_time = df_new["trade_datetime"].values[0]
     date_time = '2022-01-01'
 
-    print(f"target price = {price}")
+    # print(f"target price = {price}")
 
     return price, date_time
 
