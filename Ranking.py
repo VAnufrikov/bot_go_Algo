@@ -14,6 +14,7 @@ def get_values_for_ticket(ticket):
     r = requests.get(f'http://localhost:8000/{ticket}/q?full_info=false&include_data=any').json()
     values = ['p_e', 'roa', 'roe', 'p_e', 'p_s', 'p_b_v', 'ev_ebitda', 'i_r_r', 'revenue', 'ebitda', 'capex', 'opex',
               'e_v', 'eps']
+    values = ['p_e', 'roa', 'ebitda', 'ev_ebitda', 'capex']
     results = {}
     for val in values:
         results[val] = get_value(value_name=val, json_data=r)
@@ -46,16 +47,12 @@ def ranking(ranking_list):
             rating[list_[0]] += point
         # pbar.update(10)
 
-    result_list_sorted = sorted(ranking_list, key=lambda x: rating[x])
-    print(result_list_sorted[:5])
-    print(info_list)
-    info_list = [(x[0], x[1]) for x in info_list if x[0] in result_list_sorted]
-    print(info_list)
-    for metric in tqdm.tqdm(['p_e', 'roa', 'ebitda', 'ev_ebitda', 'capex']):
-        try:
-            temp_list = [(x[0], float(x[1].get(metric, 0))) if x[1].get(metric, 0) else (x[0], 0) for x in info_list]
-            list_metrics.append(temp_list)
-        except:
-            continue
-    # list_metrics.append([(x[0], float(x[1].get(metric, 0))) if x[1].get(metric, 0) else (x[0], 0) for x in result_list_sorted[:5]])
-    return result_list_sorted , list_metrics
+    list_metrics = []
+    result_list_sorted = sorted(ranking_list, key=lambda x: rating[x])[:5]
+
+    for ticket in result_list_sorted:
+        info = get_values_for_ticket(ticket)
+        list_metrics.append(str([str(ticket), str(info)]))
+    metrics = '\n'.join(list_metrics)
+   
+    return result_list_sorted , metrics
