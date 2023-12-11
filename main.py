@@ -26,6 +26,13 @@ from agent import predict, get_ticket_price, get_TP_SL
 
 
 if __name__ == '__main__':
+    os.system("pip3 install --upgrade pip'")
+    os.system("pip3 install 'etna[torch]'")
+    os.system("pip3 install 'etna[auto]'")
+    os.system("pip3 install 'etna[statsforecast]'")
+    os.system("pip3 install 'etna[classification]'")
+    os.system("pip3 install 'etna[prophet]'")
+    os.system("pip3 install 'etna[all]'")
 
     def get_tiket():
         """Получаем тикеты для фокусирования бота"""
