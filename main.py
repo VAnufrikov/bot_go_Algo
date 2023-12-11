@@ -128,7 +128,9 @@ if __name__ == '__main__':
                                  f'Данная новость может повлиять отрицательно на цену акции на {text_predictor}%')
 
 
-    bot.polling(none_stop=True, interval=0)
+    # bot.polling(none_stop=True, interval=0)
+    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+
     # df = read_data_stock()
     # list_tradecode = df['TRADE_CODE'].unique().tolist()
     #
