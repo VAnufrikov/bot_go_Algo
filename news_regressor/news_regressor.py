@@ -8,7 +8,7 @@ from sklearn.neighbors import KNeighborsRegressor
 
 class NewsRegressor:
     def __init__(self):
-        self.df = pd.read_excel("../../news.xlsx")[
+        self.df = pd.read_excel("news_regressor/news.xlsx")[
             ["date", "news", "proc", "ticket"]
         ]
         self.vectorizer = SentenceTransformer("cointegrated/rubert-tiny2")
