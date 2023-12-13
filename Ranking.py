@@ -3,6 +3,14 @@ import requests
 import tqdm
 
 
+def get_value(value_name, json_data):
+    val = json_data.get('data', {}).get(value_name, {}).get('values')
+    if len(val):
+        val = val[-1]
+    else:
+        val = None
+    return val
+
 def get_values_for_ticket(ticket):
     r = requests.get(f'http://localhost:8000/{ticket}/q?full_info=false&include_data=any').json()
     values = ['p_e', 'roa', 'roe', 'p_e', 'p_s', 'p_b_v', 'ev_ebitda', 'i_r_r', 'revenue', 'ebitda', 'capex', 'opex',
@@ -13,8 +21,6 @@ def get_values_for_ticket(ticket):
         results[val] = get_value(value_name=val, json_data=r)
     return results
 
-
-import tqdm
 
 
 def ranking(ranking_list):
@@ -50,5 +56,5 @@ def ranking(ranking_list):
         info = get_values_for_ticket(ticket)
         list_metrics.append(str([str(ticket), str(info)]))
     metrics = '\n'.join(list_metrics)
-   
-    return result_list_sorted , metrics
+
+    return result_list_sorted, metrics
