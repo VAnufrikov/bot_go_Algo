@@ -430,7 +430,7 @@ def clean_df_for_etna(orderstats, tradestats, obstats, horizon):
 
     df = pd.concat([tradestats, orderstats, obstats, open, pr_low], ignore_index=True).reset_index(drop=True)
 
-    df[["timestamp", "segment", "target"]].to_csv(f'df_new.csv', sep=';', encoding='utf-8')
+    # df[["timestamp", "segment", "target"]].to_csv(f'df_new.csv', sep=';', encoding='utf-8')
 
     return (
         df[["timestamp", "segment", "target"]],
@@ -518,7 +518,7 @@ def get_ticket_price(ticket: str, df, horizont) -> tuple:
     # date_time = df_new["trade_datetime"].values[0]
     date_time = '2022-01-01'
 
-    print(f"target price = {price}")
+    # print(f"target price = {price}")
 
     return price, date_time
 

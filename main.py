@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-
+import time
+from datetime import datetime
 from Ranking import ranking
 from news_regressor.news_regressor import NewsRegressor
 from upload import upload_data_from_moexalgo
@@ -26,6 +27,13 @@ from agent import predict, get_ticket_price, get_TP_SL
 
 
 if __name__ == '__main__':
+    os.system("pip3 install --upgrade pip'")
+    os.system("pip3 install 'etna[torch]'")
+    os.system("pip3 install 'etna[auto]'")
+    os.system("pip3 install 'etna[statsforecast]'")
+    os.system("pip3 install 'etna[classification]'")
+    os.system("pip3 install 'etna[prophet]'")
+    os.system("pip3 install 'etna[all]'")
 
     def get_tiket():
         """Получаем тикеты для фокусирования бота"""
@@ -35,7 +43,7 @@ if __name__ == '__main__':
         print(f"Ранжируем {len(tikets)} акций")
         ranking_listing, metrics = ranking(tikets)  # не грузит почему то :(
 
-        return ' '.join(ranking_listing[:5]), str(metrics[:5])
+        return ' '.join(ranking_listing[:5]), metrics
     import requests
 
     ranked_tiket, metrics = get_tiket()
@@ -76,10 +84,8 @@ if __name__ == '__main__':
             bot.send_message(message.from_user.id, 'Отправь мне новость')
 
         elif message.text == 'Выбрать лучшие акции для торговли':
-            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)}',
+            bot.send_message(message.from_user.id, f'Лучшие акции для торговли сейчас: {str(ranked_tiket)} \n метрики этих акций : {metrics}',
                              reply_markup=markup)
-        #     \n метрики этих акций'
-        #                                                    f'{str(metrics)}
 
         elif str(message.text).strip().lower() in ticket_lists:
             ticket = str(message.text).strip().upper()
@@ -122,7 +128,9 @@ if __name__ == '__main__':
                                  f'Данная новость может повлиять отрицательно на цену акции на {text_predictor}%')
 
 
-    bot.polling(none_stop=True, interval=0)
+    # bot.polling(none_stop=True, interval=0)
+    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+
     # df = read_data_stock()
     # list_tradecode = df['TRADE_CODE'].unique().tolist()
     #

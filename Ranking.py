@@ -1,13 +1,6 @@
 import os
 import requests
-
-def get_value(value_name, json_data):
-    val = json_data.get('data', {}).get(value_name, {}).get('values')
-    if len(val):
-        val = val[-1]
-    else:
-        val = None
-    return val
+import tqdm
 
 
 def get_values_for_ticket(ticket):
@@ -20,7 +13,10 @@ def get_values_for_ticket(ticket):
         results[val] = get_value(value_name=val, json_data=r)
     return results
 
+
 import tqdm
+
+
 def ranking(ranking_list):
     # list_tickets_for_rank = df['ticker'].unique().tolist()
 
@@ -32,7 +28,7 @@ def ranking(ranking_list):
     print('я тут ')
     info_list = [(ticket, get_values_for_ticket(ticket)) for ticket in tqdm.tqdm(ranking_list[:10])]
     print('я тут 2')
-    list_metrics =[]
+    list_metrics = []
     for metric in tqdm.tqdm(['p_e', 'roa', 'ebitda', 'ev_ebitda', 'capex']):
         try:
             temp_list = [(x[0], float(x[1].get(metric, 0))) if x[1].get(metric, 0) else (x[0], 0) for x in info_list]
